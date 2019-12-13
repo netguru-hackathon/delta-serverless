@@ -150,3 +150,84 @@ In this tutorial, you've done the following:
   - Created, built, and deployed a serverless application to AWS with AWS SAM.
   - Tested your application locally by using the AWS SAM CLI and Docker.
   - Deleted the AWS resources that you no longer need.
+
+#### Debug
+```ruby
+def lambda_handler(event:, context:)
+```
+```ruby
+event: {
+  "httpMethod"=>"GET",
+  "body"=>nil,
+  "resource"=>"/hello",
+  "requestContext"=>{
+    "resourceId"=>"123456",
+    "apiId"=>"1234567890",
+    "resourcePath"=>"/hello",
+    "httpMethod"=>"GET",
+    "requestId"=>"c6af9ac6-7b61-11e6-9a41-93e8deadbeef",
+    "accountId"=>"123456789012",
+    "stage"=>"Prod",
+    "identity"=>{
+      "apiKey"=>nil,
+      "userArn"=>nil,
+      "cognitoAuthenticationType"=>nil,
+      "caller"=>nil,
+      "userAgent"=>"Custom User Agent String",
+      "user"=>nil,
+      "cognitoIdentityPoolId"=>nil,
+      "cognitoAuthenticationProvider"=>nil,
+      "sourceIp"=>"127.0.0.1",
+      "accountId"=>nil
+    },
+    "extendedRequestId"=>nil,
+    "path"=>"/hello"
+  },
+  "queryStringParameters"=>nil,
+  "multiValueQueryStringParameters"=>nil,
+  "headers"=>{
+    "Host"=>"127.0.0.1:3000",
+    "User-Agent"=>"curl/7.64.1",
+    "Accept"=>"*/*",
+    "X-Forwarded-Proto"=>"http",
+    "X-Forwarded-Port"=>"3000"
+  },
+  "multiValueHeaders"=>{
+    "Host"=>["127.0.0.1:3000"],
+    "User-Agent"=>["curl/7.64.1"],
+    "Accept"=>["*/*"],
+    "X-Forwarded-Proto"=>["http"],
+    "X-Forwarded-Port"=>["3000"]
+  },
+  "pathParameters"=>nil,
+  "stageVariables"=>nil,
+  "path"=>"/hello",
+  "isBase64Encoded"=>false
+}
+```
+```ruby
+context:
+  #<LambdaContext:0x0000560098a15740
+    @clock_diff=1576214993753,
+    @deadline_ms=1576233728207,
+    @aws_request_id="d8ec5a5a-d4ea-1d06-dfaf-f32eb507277a",
+    @invoked_function_arn="arn:aws:lambda:eu-central-1:1533663119:function:test",
+    @log_group_name="/aws/lambda/test",
+    @log_stream_name="2019/12/13/[$LATEST]70a339df73d3264d8dae38f7687f95d6",
+    @function_name="test",
+    @memory_limit_in_mb="128",
+    @function_version="$LATEST"
+  >
+```
+
+Gems have to be bundled before using Ruby 2.5.x and put into the `vendor/bundle` directory.
+
+Final structure need to look like this (example):
+```ruby
+  {
+    statusCode: 200,
+    body: {
+      message: "something"
+    }
+  }
+```
