@@ -1,0 +1,45 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: lorem-ipsum-for-today # NOTE: update this with your service name
+
+# Remember to install project dependencies to register the provider plugin.
+# $ npm install
+provider:
+  name: openwhisk
+  runtime: ruby
+
+package:
+  exclude:
+    - .bundle/**
+    - Gemfile
+    - Gemfile.lock
+    - Rakefile
+    - spec/**
+    - node_modules/**
+    - package-lock.json
+    - package.json
+
+functions:
+  lorem-ipsum-html:
+    handler: main.main
+    events:
+      - http: GET /main
+    annotations:
+      web-export: true
+      require-whisk-auth: false
+
+# extend the framework using plugins listed here:
+# https://github.com/serverless/plugins
+plugins:
+  - serverless-openwhisk
